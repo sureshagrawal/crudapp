@@ -59,6 +59,7 @@ public class StudentDAOImpl implements StudentDAO{
             try(ResultSet rs =  stmt.executeQuery()){
                 if(rs.next()){
                     student = new Student();
+                    student.setId(rs.getInt("id"));
                     student.setName(rs.getString("name"));
                     student.setEmail(rs.getString("email"));
                     student.setMobile(rs.getString("mobile"));
