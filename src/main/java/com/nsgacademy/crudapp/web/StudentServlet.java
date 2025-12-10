@@ -40,7 +40,7 @@ public class StudentServlet extends HttpServlet {
                     break;
                 case "edit":
                     break;
-                case "delete":
+                case "delete": deleteStudent(req,resp);
                     break;
                 case "insert":
                     break;
@@ -49,7 +49,7 @@ public class StudentServlet extends HttpServlet {
                 default: listStudents(req,resp);  //case "list";                    ;
             }
         }catch(DAOException e){
-            e.printStackTrace();
+            e.printStackTrace(); //developers logs
         }
     }
 
@@ -57,5 +57,11 @@ public class StudentServlet extends HttpServlet {
         List<Student> studentList = studentDAO.getAllStudents(); //use model
         req.setAttribute("students",studentList); //set data for view
         req.getRequestDispatcher("student-list.jsp").forward(req,resp); //call view
+    }
+
+    private void deleteStudent(HttpServletRequest req,HttpServletResponse resp) throws ServletException, IOException{
+        int id = Integer.parseInt(req.getParameter("id")); //receive data from view
+        studentDAO.delete(id); //pass data to model
+        resp.sendRedirect("students?action=list&success=Deleted Successfully"); //call view with success/failure attribute
     }
 }
