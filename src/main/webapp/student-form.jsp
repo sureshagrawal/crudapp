@@ -7,7 +7,7 @@
         <h5>SERVLET + JSP + JDBC</h5>
 
         <h4>Student (Add/Edit) Form</h4>
-        <form>
+        <form action="students?action=insert" method="post">
             <label>Name</label>
             <input type="text" name="name" placeholder="Enter Name" required><br><br>
 
@@ -18,7 +18,7 @@
             <input type="text" name="mobile" placeholder="Enter Mobile" required><br><br>
 
             <button type="submit">Save</button>
-            <a href="">Cancel</a>
+            <a href="students">Cancel</a>
         </form>
     </body>
 </html>
