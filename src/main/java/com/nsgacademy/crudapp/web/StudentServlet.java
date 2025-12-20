@@ -3,6 +3,7 @@ package com.nsgacademy.crudapp.web;
 import com.nsgacademy.crudapp.dao.StudentDAO;
 import com.nsgacademy.crudapp.dao.StudentDAOImpl;
 import com.nsgacademy.crudapp.exception.DAOException;
+import com.nsgacademy.crudapp.model.Pagination;
 import com.nsgacademy.crudapp.model.Student;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -73,8 +74,35 @@ public class StudentServlet extends HttpServlet {
 
 
     private void listStudents(HttpServletRequest req,HttpServletResponse resp) throws ServletException, IOException{
-        List<Student> studentList = studentDAO.getAllStudents(); //use model
+
+        int page = 1; //default page
+        int pageSize = 5; //default pagesize
+
+        if(req.getParameter("page")!=null)
+            page = Integer.parseInt(req.getParameter("page"));
+
+        if(req.getParameter("pageSize")!=null)
+            pageSize = Integer.parseInt(req.getParameter("pageSize"));
+
+        Pagination pagination = new Pagination(page,pageSize);
+
+        int totalRecords = studentDAO.countStudents();
+        int totalPages = (int) Math.ceil((double)totalRecords / pageSize);
+
+        if(page<1)
+            page = 1;
+        if(page>totalPages)
+            page = totalPages;
+
+        pagination.setPage(page);
+
+        List<Student> studentList = studentDAO.getSelectedStudents(pagination); //use model
+
         req.setAttribute("students",studentList); //set data for view
+        req.setAttribute("totalPages",totalPages);
+        req.setAttribute("currentPage",page);
+        req.setAttribute("pageSize",pageSize);
+        req.setAttribute("totalRecords",totalRecords);
         req.getRequestDispatcher("student-list.jsp").forward(req,resp); //call view
     }
 
