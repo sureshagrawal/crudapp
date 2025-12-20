@@ -1,220 +1,334 @@
 # 📘 MVC CRUD Application using JSP, Servlet, and JDBC (PostgreSQL)
 
+![Java](https://img.shields.io/badge/Java-17+-orange)
+![Servlet](https://img.shields.io/badge/Jakarta%20Servlet-API-blue)
+![JSP](https://img.shields.io/badge/JSP-View-yellow)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Database-blue)
+![Tomcat](https://img.shields.io/badge/Tomcat-11-yellow)
+![Bootstrap](https://img.shields.io/badge/Bootstrap-5-purple)
+![MVC](https://img.shields.io/badge/Architecture-MVC-success)
+![License](https://img.shields.io/badge/License-Educational-lightgrey)
+
 A clean and modular **MVC web application** built using **JSP, Servlets, JDBC, and PostgreSQL**.  
 This project demonstrates a professional backend structure with proper MVC layering, centralized error handling, Bootstrap UI, and complete CRUD operations.
 
 GitHub Repository: **https://github.com/sureshagrawal/crudapp**
 
+> **Current Stable Release:** `v1.1-pagination`
+
 ---
 
-## 🚀 Features
+## ✨ Features (Current Version – v1.1 Pagination)
 
-### ✔ Core CRUD Operations
-- Add a new student  
-- List all students  
-- Edit/update student  
-- Delete student  
-- Success notifications after each operation  
-- Validation (client-side + server-side)
+- **Core CRUD Operations**
+  - Add Student
+  - View Student List
+  - Edit Student
+  - Delete Student
 
-### ✔ MVC Architecture
-- **Model:** `Student.java`  
-- **DAO Layer:**  
-  - `StudentDAO.java`  
-  - `StudentDAOImpl.java`  
-  - `DAOException.java` *(inside exception package)*  
-- **Controller:** `StudentServlet.java`  
-- **View:** JSP pages (`student-list.jsp`, `student-form.jsp`, `error.jsp`)
+- **Pagination**
+  - Page navigation (First / Previous / Next / Last)
+  - Page size selection
+  - Go-to-page option
+  - Record range indicator
 
-### ✔ UI / UX Enhancements
-- Bootstrap-based responsive design  
-- Modern table layout  
-- Validation error messages  
-- Confirmation on delete  
-- Form data retention on validation failure  
+- **Validation**
+  - Client-side validation using HTML5
+  - Server-side validation in Servlet
 
-### ✔ Error Handling
-- Centralized `error.jsp`  
-- Custom `DAOException` inside `exception` package  
-- Root cause details shown on development mode  
+- **UI / UX Enhancements**
+  - Responsive layout using Bootstrap
+  - Clean and consistent action buttons
+  - User-friendly messages and alerts
+
+- **Centralized Exception Handling**
+  - Custom `DAOException`
+  - Dedicated error page (`error.jsp`)
+
+- **Clean MVC Separation**
+  - Model → Data representation
+  - DAO → Database access
+  - Controller → Request handling
+  - View → UI rendering
 
 ---
 
 ## 🛠️ Technology Stack
 
 | Layer | Technology |
-|-------|------------|
-| Frontend | JSP, HTML5, Bootstrap 5 |
-| Controller | Servlets (Jakarta EE 10) |
-| Backend | Java 21+ |
+|------|-----------|
+| Frontend (View) | JSP, HTML5, CSS3, Bootstrap 5 |
+| UI Icons | Font Awesome |
+| Controller | Jakarta Servlet API |
+| Backend (Business Logic) | Java |
+| Database Access | JDBC |
 | Database | PostgreSQL |
-| DB Access | JDBC (Prepared Statements) |
-| Server | Apache Tomcat 11 |
+| Application Server | Apache Tomcat 11 |
 | Build Tool | Maven |
+| Architecture Pattern | MVC (Model–View–Controller) |
+| Version Control | Git & GitHub |
 
 ---
 
-## 📂 Project Structure
+## 📁 Project Structure
 
 ```
 crudapp/
 │
-├── src/main/java/com/nsgacademy/crudmvc/
-│   ├── model/
-│   │   └── Student.java
-│   │
-│   ├── dao/
-│   │   ├── StudentDAO.java
-│   │   ├── StudentDAOImpl.java
-│   │
-│   ├── exception/
-│   │   └── DAOException.java
-│   │
-│   ├── utils/
-│   │   └── JDBCUtils.java
-│   │
-│   └── web/
-│       └── StudentServlet.java
+├── src/main/java
+│   └── com/nsgacademy/crudmvc
+│       ├── model                # Domain & request models
+│       │   ├── Student.java
+│       │   └── Pagination.java
+│       │
+│       ├── dao                  # Data Access Layer (JDBC)
+│       │   ├── StudentDAO.java
+│       │   └── StudentDAOImpl.java
+│       │
+│       ├── exception            # Centralized exception handling
+│       │   └── DAOException.java
+│       │
+│       ├── utils                # Utility & Infrastructure classes
+│       │   └── JDBCUtils.java
+│       │
+│       └── web                  # Controller layer (Servlets)
+│           └── StudentServlet.java
 │
-└── src/main/webapp/
-    ├── student-list.jsp
-    ├── student-form.jsp
-    ├── error.jsp
-    └── WEB-INF/
-        └── web.xml (optional)
+├── src/main/webapp               # View Layer (JSP)
+│   ├── student-list.jsp
+│   ├── student-form.jsp
+│   └── error.jsp
+│
+├── screenshots                   # Versioned UI screenshots
+│   ├── v1.0
+│   └── v1.1
+│
+├── pom.xml
+└── README.md
 ```
 
 ---
 
-## 🗄️ Database Setup (PostgreSQL)
+## 🧠 Architecture Overview
 
-Create database:
+This application follows the **classic MVC (Model–View–Controller) architecture**.
+
+- **Model**
+  - Represents application data (`Student`)
+
+- **DAO Layer**
+  - Contains all SQL queries
+  - Handles database interaction only
+
+- **Controller (Servlet)**
+  - Routes HTTP requests
+  - Performs server-side validation
+  - Controls application flow
+
+- **View (JSP)**
+  - Responsible only for UI rendering
+  - Contains no business logic
+
+**Design Principles**
+- No SQL in JSP
+- No JDBC code in Servlet
+- Clear separation of responsibilities
+- Easy to extend and maintain
+
+---
+
+## 🗄️ Database Schema
 
 ```sql
-CREATE DATABASE cruddb;
-```
-
-Create table:
-
-```sql
-CREATE TABLE students (
+CREATE TABLE student (
     id SERIAL PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    email VARCHAR(150) UNIQUE NOT NULL,
-    mobile VARCHAR(15) NOT NULL
+    name   VARCHAR(50) NOT NULL,
+    email  VARCHAR(100) NOT NULL,
+    mobile VARCHAR(10) NOT NULL
 );
 ```
 
-Update **JDBCUtils.java**:
+---
+
+## ⚙️ Configuration
+
+### Database Configuration
+
+Update database credentials in `JDBCUtils.java`:
 
 ```java
-private static final String URL = "jdbc:postgresql://localhost:5432/cruddb";
+private static final String URL  = "jdbc:postgresql://localhost:5432/cruddb";
 private static final String USER = "postgres";
-private static final String PASSWORD = "your_password";
+private static final String PASS = "password";
 ```
 
 ---
 
-## ⚙️ How to Run the Project
+## ▶️ How to Run the Project (Detailed)
 
-### 1️⃣ Clone the repository
+### 1️⃣ Prerequisites
+- JDK 17 or higher
+- PostgreSQL installed and running
+- Apache Tomcat 11
+- IDE (IntelliJ IDEA / Eclipse)
 
+---
+
+### 2️⃣ Clone the Repository
 ```bash
 git clone https://github.com/sureshagrawal/crudapp.git
 ```
 
-### 2️⃣ Import into your IDE
-- IntelliJ IDEA / Eclipse / VS Code  
-- Open as **Maven Project**
+---
 
-### 3️⃣ Configure PostgreSQL
-- Ensure DB `cruddb` exists  
-- Run the table creation SQL  
-
-### 4️⃣ Configure Tomcat
-- Add Tomcat 11  
-- Deploy the WAR or exploded artifact  
-
-### 5️⃣ Access the application
-
-```
-http://localhost:8080/crudapp/
+### 3️⃣ Create Database
+```sql
+CREATE DATABASE cruddb;
 ```
 
----
-
-## 🧪 Validation Features
-
-### Client-Side
-- Required fields  
-- Email format validation  
-- Mobile number regex (10 digits)  
-- Name pattern restrictions  
-
-### Server-Side
-- All input validated again on the backend  
-- Errors displayed inline on form  
-- User input retained after validation failure  
+Create table using the schema provided above.
 
 ---
 
-## 🐞 Error Handling
-
-- All database errors wrapped in `DAOException`  
-- `StudentServlet` catches and forwards to `error.jsp`  
-- Error page displays:
-  - Error message  
-  - Exception stack trace  
-  - Root cause for debugging  
+### 4️⃣ Import Project into IDE
+- Open IDE
+- Import as **Maven Project**
+- Configure Apache Tomcat 11 in IDE
 
 ---
 
-## 🔮 Future Enhancements (Planned)
+### 5️⃣ Run Application
+- Deploy project on Tomcat
+- Access application at:
 
-- Pagination  
-- Sorting  
-- Searching  
-- Student photo upload  
-- Gender + DOB + Age calculation  
-- Import (CSV/Excel)  
-- Export (CSV/Excel/PDF)  
-- Login system & roles (User / Admin)  
-- Audit logs  
-- Deployment configuration  
+```
+http://localhost:8080/<context-root>/students
+```
 
 ---
 
-## 📸 Screenshots (Add Later)
+## 🏷️ Versioning Strategy (Planned Roadmap)
 
-### ▶ Student List Page  
-<img width="1920" height="1080" alt="student-list" src="https://github.com/user-attachments/assets/349dc6fe-8e94-4b40-933a-5c322345f849" />
+This project follows **incremental, tagged releases** to ensure stability.
 
+| Version | Features |
+|------|--------|
+| v1.0-crud | Core CRUD (current stable) |
+| v1.1-pagination | Pagination |
+| v1.2-search | Search |
+| v1.3-sorting | Sorting |
+| v1.4-advanced-fields | Gender, DOB, Age Calculation |
+| v1.5-file-upload | Student Photo Upload |
+| v1.6-import | Import (CSV / Excel) |
+| v1.7-export | Export (CSV, Excel, PDF, HTML) |
+| v1.8-auth | Login System & Roles |
+| v1.9-audit | Audit Logs |
+| v2.0-deployment | Deployment Configuration |
+| v3.0-hibernate | Hibernate Migration |
+| v4.0-jpa | JPA Migration |
 
-### ▶ Add/Edit Form and Delete 
+Each version will be **independently stable and tagged**.
 
-<img width="1920" height="1080" alt="delete" src="https://github.com/user-attachments/assets/0b2cd727-d45c-4fc8-9379-bcb74487febe" />
-<img width="1920" height="1080" alt="edit" src="https://github.com/user-attachments/assets/eee0f14f-569b-4e25-bf13-9331d0ce09b5" />
-<img width="1920" height="1080" alt="add" src="https://github.com/user-attachments/assets/39a31df2-9492-452d-9515-344599bc28de" />
-<img width="1920" height="1080" alt="after_delete" src="https://github.com/user-attachments/assets/3ffbdf50-d632-4610-91f8-9a2ce5e6023d" />
+---
 
-### ▶ Error Page  
-<img width="1920" height="1080" alt="error" src="https://github.com/user-attachments/assets/08de0629-d507-4fca-9a93-f5b4949b4b59" />
+## 🔮 Future Architecture Direction
 
+This project is intentionally designed to align with modern Spring-based applications.
+
+Planned transitions:
+- Servlet MVC → Spring MVC
+- JDBC → Spring Data JPA
+- JSP → REST APIs + Frontend (React / Thymeleaf)
+- Manual pagination → `Pageable`
+- Manual filters → Specification / Criteria-based filtering
+
+---
+
+## ⚠️ Known Limitations (Intentional)
+
+- No Service layer (kept simple for Servlet MVC)
+- No ORM in early versions (JDBC used for clarity)
+- No REST APIs yet
+- Authentication not included in early versions
+
+---
+
+## 📸 Screenshots
+
+### v1.0 – Core CRUD Functionality
+
+| Feature                | Screenshot                                                   |
+|------------------------|--------------------------------------------------------------|
+| Student List           | ![List](screenshots/v1.0/list.png)                           |
+| Delete Confirmation    | ![Delete](screenshots/v1.0/delete-confirm.png)               |
+| Delete Success Message | ![Success](screenshots/v1.0/delete-success-message.png)      |
+| Add Student            | ![Add](screenshots/v1.0/add-student.png)                     |
+| Add Success Message    | ![Success](screenshots/v1.0/add-success-message.png)         |
+| Edit Student           | ![Edit](screenshots/v1.0/edit-student.png)                   |
+| Update Success Message | ![Success](screenshots/v1.0/update-success-message.png)      |
+| Validation – Name      | ![Name Validation](screenshots/v1.0/validation-name.png)     |
+| Validation – Mobile    | ![Mobile Validation](screenshots/v1.0/validation-mobile.png) |
+| Error Page             | ![Error](screenshots/v1.0/error-page.png)                    |
+
+---
+
+### v1.1 – Pagination Enhancements
+
+| Feature | Screenshot |
+|-------|------------|
+| Pagination Toolbar | ![Toolbar](screenshots/v1.1/pagination-toolbar.png) |
+| Pagination Navigation | ![Pagination](screenshots/v1.1/pagination-navigation.png) |
+
+---
+
+## 🎯 Purpose of This Project
+
+- Learn MVC fundamentals deeply
+- Build CRUD applications the right way
+- Understand incremental feature evolution
+- Prepare an interview-ready project
+- Serve as a teaching and learning reference
+- Act as a base for ORM migration (Hibernate / JPA)
 
 ---
 
 ## 🤝 Contributing
 
-Pull requests and feature suggestions are welcome!  
+Contributions are welcome for:
+- Code improvements
+- Refactoring
+- Documentation
+- Feature suggestions
+
+Please create a feature branch and submit a pull request.
+
+---
+
+## 🧹 Git Hygiene
+
+The repository includes a proper `.gitignore` to exclude:
+- IDE configuration files
+- Build artifacts
+- Temporary files and logs
 
 ---
 
 ## 📄 License
 
-This project is open-source and licensed under the **MIT License**.
+This project is open-source and intended for **educational purposes**.
+
+---
+
+## 👤 Author
+
+**Suresh Agrawal**  
+Java Full Stack Developer & Trainer
 
 ---
 
 ## 🙏 Acknowledgement
 
-Developed as a modular and extendable CRUD foundation before adding advanced features such as import/export, authentication, and more.
+- Java open-source community
+- Apache Tomcat & PostgreSQL teams
+- Bootstrap & Font Awesome
+- Students and developers who inspire continuous learning
