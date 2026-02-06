@@ -5,6 +5,9 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
     </head>
     <body class="container my-4">
+
+        <jsp:include page="header.jsp"/>
+
         <h2 class="text-danger">Something Wrong Happened!</h2>
         <h5 class="text-muted mb-3">Encountered some issue processing request</h5>
 

@@ -5,6 +5,9 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
     </head>
     <body class="container mt-4">
+
+        <jsp:include page="header.jsp"/>
+
         <h2 class="text-center mb-3">MVC CRUD APPLICATION</h2>
         <h5 class="text-center mb-3">SERVLET + JSP + JDBC</h5>
 

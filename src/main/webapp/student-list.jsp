@@ -8,6 +8,9 @@
     </head>
 
     <body class="container mt-4">
+
+        <jsp:include page="header.jsp"/>
+
         <h2 class="text-center mb-3">MVC CRUD APPLICATION</h2>
         <h5 class="text-center mb-3">SERVLET + JSP + JDBC</h5>
 
