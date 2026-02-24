@@ -19,7 +19,7 @@
 
 <div class="card shadow p-4" style="width:380px">
 
-    <h3 class="text-center mb-4">🔐 Login</h3>
+    <h3 class="text-center mb-4">🔐 NSGAcademy Login</h3>
 
     <%
         String error = (String)request.getAttribute("error");
